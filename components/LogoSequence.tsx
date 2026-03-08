@@ -73,15 +73,21 @@ export function LogoSequence() {
       const width = window.innerWidth;
       const height = window.innerHeight;
       
+      // Improve image scaling for mobile devices - handle wide vs tall screens
       canvas.width = width;
       canvas.height = height;
 
       // scale logic (object-contain)
       const scale = Math.min(width / img.width, height / img.height);
-      const scaledWidth = img.width * scale;
-      const scaledHeight = img.height * scale;
+      // Scale slightly up on mobile to avoid small logo feeling disconnected
+      const finalScale = window.innerWidth < 768 ? scale * 1.2 : scale;
+
+      const scaledWidth = img.width * finalScale;
+      const scaledHeight = img.height * finalScale;
       const x = (width - scaledWidth) / 2;
-      const y = (height - scaledHeight) / 2;
+      // Shift upwards slightly on mobile to accommodate text below
+      const yOffset = window.innerWidth < 768 ? -50 : 0;
+      const y = (height - scaledHeight) / 2 + yOffset;
 
       ctx.clearRect(0, 0, width, height);
       ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
@@ -107,17 +113,17 @@ export function LogoSequence() {
   return (
     <div ref={containerRef} className="relative h-[400vh] w-full bg-[#050505]">
       {/* Sticky Canvas Container */}
-      <div className="sticky top-[env(safe-area-inset-top,0px)] h-screen w-full overflow-hidden flex items-center justify-center">
+      <div className="sticky top-[env(safe-area-inset-top,0px)] h-screen w-full overflow-hidden flex flex-col items-center justify-center">
         {!isLoaded && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center z-50 bg-[#050505] text-[#00F2FF]">
-            <div className="text-xl tracking-[0.2em] mb-4 uppercase font-mono">Initializing Sequence</div>
-            <div className="w-64 h-1 bg-gray-800 rounded-full overflow-hidden">
+          <div className="absolute inset-0 flex flex-col items-center justify-center z-50 bg-[#050505] text-[#00F2FF] px-6 text-center">
+            <div className="text-sm sm:text-lg md:text-xl tracking-[0.2em] mb-4 uppercase font-mono">Initializing Sequence</div>
+            <div className="w-full max-w-xs h-1 bg-gray-800 rounded-full overflow-hidden">
               <div 
                 className="h-full bg-gradient-to-r from-[#00F2FF] to-[#FF8C00] transition-all duration-300"
                 style={{ width: `${loadingProgress * 100}%` }}
               />
             </div>
-            <div className="mt-4 text-xs font-mono text-gray-500">
+            <div className="mt-4 text-[10px] sm:text-xs font-mono text-gray-500">
               FRAME {Math.round(loadingProgress * FRAME_COUNT)} / {FRAME_COUNT}
             </div>
           </div>
@@ -129,27 +135,27 @@ export function LogoSequence() {
 
         {/* Text Beats Overlay */}
         {isLoaded && (
-          <div className="absolute inset-0 pointer-events-none flex items-center justify-center container mx-auto px-4 z-10">
+          <div className="absolute inset-0 pointer-events-none flex items-end sm:items-center justify-center container mx-auto px-4 z-10 pb-[15vh] sm:pb-0">
             {/* Beat A (0-20%) */}
             <Beat 
               progress={smoothProgress} 
               range={[0, 0.1, 0.2, 0.25]} 
-              title="ORIGIN BY CODE" 
-              subtitle="Forging digital infrastructure." 
+              title="GEEKROOM JIMSEMTC" 
+              subtitle="The premier tech society." 
             />
             {/* Beat B (25-45%) */}
             <Beat 
               progress={smoothProgress} 
               range={[0.25, 0.35, 0.45, 0.5]} 
-              title="ARCHITECTURAL PRECISION" 
-              subtitle="Brackets aligned, logic secured." 
+              title="HACK. BUILD. LEARN." 
+              subtitle="Transforming ideas into reality." 
             />
             {/* Beat C (50-70%) */}
             <Beat 
               progress={smoothProgress} 
               range={[0.5, 0.6, 0.7, 0.75]} 
-              title="ENERGIZED CORE" 
-              subtitle="Igniting the hardware-software bridge." 
+              title="COMMUNITY DRIVEN" 
+              subtitle="Elevating student developers together." 
             />
             {/* Beat D (75-100%) */}
             <BeatD progress={smoothProgress} range={[0.75, 0.85, 1, 1]} />
@@ -162,17 +168,17 @@ export function LogoSequence() {
 
 function Beat({ progress, range, title, subtitle }: { progress: any, range: number[], title: string, subtitle: string }) {
   const opacity = useTransform(progress, range, [0, 1, 1, 0]);
-  const y = useTransform(progress, range, [50, 0, 0, -50]);
+  const y = useTransform(progress, range, [30, 0, 0, -30]);
 
   return (
     <motion.div 
       style={{ opacity, y }} 
-      className="absolute text-center flex flex-col items-center justify-center drop-shadow-2xl"
+      className="absolute text-center flex flex-col items-center justify-center drop-shadow-2xl w-full px-4"
     >
-      <h2 className="text-4xl md:text-7xl font-bold tracking-tighter text-white mb-4 uppercase drop-shadow-[0_0_15px_rgba(0,242,255,0.3)]">
+      <h2 className="text-3xl sm:text-4xl md:text-7xl font-bold tracking-tighter text-white mb-2 sm:mb-4 uppercase drop-shadow-[0_0_15px_rgba(0,242,255,0.3)]">
         {title}
       </h2>
-      <p className="text-lg md:text-2xl text-gray-400 font-medium tracking-wide">
+      <p className="text-base sm:text-lg md:text-2xl text-gray-400 font-medium tracking-wide max-w-[280px] sm:max-w-max mx-auto leading-tight sm:leading-normal">
         {subtitle}
       </p>
     </motion.div>
@@ -181,18 +187,18 @@ function Beat({ progress, range, title, subtitle }: { progress: any, range: numb
 
 function BeatD({ progress, range }: { progress: any, range: number[] }) {
   const opacity = useTransform(progress, range, [0, 1, 1, 1]);
-  const y = useTransform(progress, range, [50, 0, 0, 0]);
+  const y = useTransform(progress, range, [30, 0, 0, 0]);
 
   return (
     <motion.div 
       style={{ opacity, y }} 
-      className="absolute text-center flex flex-col items-center justify-center drop-shadow-2xl pointer-events-auto"
+      className="absolute text-center flex flex-col items-center justify-center drop-shadow-2xl pointer-events-auto w-full px-4"
     >
-      <h2 className="text-4xl md:text-7xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-[#00F2FF] to-[#FF8C00] mb-8 uppercase drop-shadow-[0_0_20px_rgba(255,140,0,0.6)]">
-        DEPLOYING THE FUTURE
+      <h2 className="text-3xl sm:text-4xl md:text-7xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-[#00F2FF] to-[#FF8C00] mb-6 sm:mb-8 uppercase drop-shadow-[0_0_20px_rgba(255,140,0,0.6)]">
+        JOIN THE NETWORK
       </h2>
-      <button className="px-8 py-4 bg-transparent border border-[#00F2FF] text-[#00F2FF] font-mono tracking-widest text-sm hover:bg-[#00F2FF] hover:text-[#050505] transition-colors duration-300 pointer-events-auto">
-        INITIALIZE DEPLOYMENT
+      <button className="px-6 py-3 sm:px-8 sm:py-4 bg-transparent border border-[#00F2FF] text-[#00F2FF] font-mono tracking-widest text-[10px] sm:text-sm hover:bg-[#00F2FF] hover:text-[#050505] transition-colors duration-300 pointer-events-auto w-[200px] sm:w-auto">
+        BECOME A MEMBER
       </button>
     </motion.div>
   );
