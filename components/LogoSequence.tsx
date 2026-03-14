@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useScroll, useSpring, useTransform, motion } from "framer-motion";
+import Link from "next/link";
+import { useUser } from "@clerk/nextjs";
 
 const FRAME_COUNT = 232;
 // Generate paths from ezgif-frame-001.jpg to ezgif-frame-232.jpg
@@ -11,6 +13,7 @@ const getFramePath = (index: number) => {
 };
 
 export function LogoSequence() {
+  const { isSignedIn } = useUser();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
@@ -158,7 +161,7 @@ export function LogoSequence() {
               subtitle="Elevating student developers together." 
             />
             {/* Beat D (75-100%) */}
-            <BeatD progress={smoothProgress} range={[0.75, 0.85, 1, 1]} />
+            <BeatD progress={smoothProgress} range={[0.75, 0.85, 1, 1]} isSignedIn={!!isSignedIn} />
           </div>
         )}
       </div>
@@ -185,7 +188,7 @@ function Beat({ progress, range, title, subtitle }: { progress: any, range: numb
   );
 }
 
-function BeatD({ progress, range }: { progress: any, range: number[] }) {
+function BeatD({ progress, range, isSignedIn }: { progress: any, range: number[], isSignedIn: boolean }) {
   const opacity = useTransform(progress, range, [0, 1, 1, 1]);
   const y = useTransform(progress, range, [30, 0, 0, 0]);
 
@@ -195,11 +198,24 @@ function BeatD({ progress, range }: { progress: any, range: number[] }) {
       className="absolute text-center flex flex-col items-center justify-center drop-shadow-2xl pointer-events-auto w-full px-4"
     >
       <h2 className="text-3xl sm:text-4xl md:text-7xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-[#00F2FF] to-[#FF8C00] mb-6 sm:mb-8 uppercase drop-shadow-[0_0_20px_rgba(255,140,0,0.6)]">
-        JOIN THE NETWORK
+        {isSignedIn ? "EXPLORE THE HUB" : "JOIN THE NETWORK"}
       </h2>
-      <button className="px-6 py-3 sm:px-8 sm:py-4 bg-transparent border border-[#00F2FF] text-[#00F2FF] font-mono tracking-widest text-[10px] sm:text-sm hover:bg-[#00F2FF] hover:text-[#050505] transition-colors duration-300 pointer-events-auto w-[200px] sm:w-auto">
-        BECOME A MEMBER
-      </button>
+      {!isSignedIn && (
+        <Link href="/sign-in" className="pointer-events-auto group relative inline-flex items-center justify-center font-sans tracking-widest text-xs sm:text-sm uppercase mt-4">
+          <motion.div 
+            whileTap={{ scale: 0.95 }}
+            className="relative flex items-center justify-center h-10 sm:h-12 px-8 rounded-full overflow-hidden w-[160px] sm:w-[200px] border border-[#00F2FF]/40 bg-[#050505]/60 backdrop-blur-md shadow-[0_0_15px_rgba(0,242,255,0.15)] group-hover:shadow-[0_0_30px_rgba(0,242,255,0.4)] group-hover:border-[#00F2FF]/80 transition-all duration-300"
+          >
+            {/* Fill state (shown on hover) */}
+            <div className="absolute inset-0 bg-[#00F2FF]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            
+            {/* Text */}
+            <span className="relative z-10 text-[#00F2FF] group-hover:text-white font-mono font-bold drop-shadow-md transition-colors duration-300">
+              SIGN IN
+            </span>
+          </motion.div>
+        </Link>
+      )}
     </motion.div>
   );
 }
