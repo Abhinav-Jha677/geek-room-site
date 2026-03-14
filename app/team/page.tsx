@@ -12,16 +12,16 @@ type Member = {
 };
 
 const coreMembers: Member[] = [
-  { id: 1, name: "Member 1", role: "President", photo: "", gmail: "member1@gmail.com", linkedin: "https://linkedin.com" },
-  { id: 2, name: "Member 2", role: "Vice President", photo: "", gmail: "member2@gmail.com", linkedin: "https://linkedin.com" },
-  { id: 3, name: "Member 3", role: "Secretary", photo: "", gmail: "member3@gmail.com", linkedin: "https://linkedin.com" },
-  { id: 4, name: "Member 4", role: "Treasurer", photo: "", gmail: "member4@gmail.com", linkedin: "https://linkedin.com" },
+  { id: 1, name: "Ronit Mathur", role: "President", photo: "/ronit.png", gmail: "ronit.oct11@gmail.com", linkedin: "https://www.linkedin.com/in/r0nit-mathur/" },
+  { id: 2, name: "Paras Dudeja", role: "General Secretary", photo: "/paras.jpeg", gmail: "", linkedin: "https://www.linkedin.com/in/paras-dudeja-8154aa351/" },
+  { id: 3, name: "Punish Ahuja", role: "Treasurer", photo: "/punish.jpeg", gmail: "apunish4@gmail.com", linkedin: "https://www.linkedin.com/in/punish-ahuja-b25352336/" },
+  { id: 4, name: "Rudra Dutt Sharma", role: "Vice President", photo: "/rudra.jpeg", gmail: "rdsharma459@gmail.com", linkedin: "https://www.linkedin.com/in/rdsharma1/" },
 ];
 
 const headMembers: Member[] = [
-  { id: 5, name: "Member 5", role: "Tech Head", photo: "", gmail: "member5@gmail.com", linkedin: "https://linkedin.com" },
-  { id: 6, name: "Member 6", role: "Design Head", photo: "", gmail: "member6@gmail.com", linkedin: "https://linkedin.com" },
-  { id: 7, name: "Member 7", role: "Publicity Head", photo: "", gmail: "member7@gmail.com", linkedin: "https://linkedin.com" },
+  { id: 5, name: "Alok Sahoo", role: "Tech Head", photo: "/alok.jpeg", gmail: "alokksahoo154@gmail.com", linkedin: "https://www.linkedin.com/in/alok-kumar-sahoo154/" },
+  { id: 6, name: "Lakshita Parashar", role: "Publicity Head", photo: "/lakshita.jpeg", gmail: "lakshitaparashar2005@gmail.com", linkedin: "https://www.linkedin.com/in/lakshita-parashar-59b144293/" },
+  { id: 7, name: "Rudra Dutt Sharma", role: "Management Head", photo: "/rudra.jpeg", gmail: "rdsharma459@gmail.com", linkedin: "https://www.linkedin.com/in/rdsharma1/" },
 ];
 
 const techMembers: Member[] = [
@@ -47,10 +47,10 @@ const designMembers: Member[] = [
 ];
 
 const managementMembers: Member[] = [
-  { id: 23, name: "Member 23", role: "", photo: "", gmail: "member23@gmail.com", linkedin: "https://linkedin.com" },
-  { id: 24, name: "Member 24", role: "", photo: "", gmail: "member24@gmail.com", linkedin: "https://linkedin.com" },
-  { id: 25, name: "Member 25", role: "", photo: "", gmail: "member25@gmail.com", linkedin: "https://linkedin.com" },
-  { id: 26, name: "Member 26", role: "", photo: "", gmail: "member26@gmail.com", linkedin: "https://linkedin.com" },
+  { id: 23, name: "Shailendra Pal", role: "", photo: "/shailendra.webp", gmail: "shailendrrr18@gmail.com", linkedin: "https://www.linkedin.com/in/shailendra-pal-54382937a/" },
+  { id: 24, name: "Abhinav Sharma", role: "", photo: "/abhinav_sharma.jpeg", gmail: "abhi8077208979@gmail.com", linkedin: "https://www.linkedin.com/in/abhinav-sharma-59a835356/" },
+  { id: 25, name: "Member 25", role: "", photo: "", gmail: "", linkedin: "https://linkedin.com" },
+  { id: 26, name: "Member 26", role: "", photo: "", gmail: "", linkedin: "https://linkedin.com" },
 ];
 
 const CARD_W = 200;
