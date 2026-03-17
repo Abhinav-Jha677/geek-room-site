@@ -1,5 +1,5 @@
 import { LogoSequence } from "@/components/LogoSequence";
-import { AboutPreview } from "@/components/AboutPreview";
+import { SystemInterface } from "@/components/SystemInterface";
 import { TeamPreview } from "@/components/TeamPreview";
 import { EventsPreview } from "@/components/EventsPreview";
 import { GalleryPreview } from "@/components/GalleryPreview";
@@ -23,7 +23,7 @@ export default async function Home() {
       <LogoSequence />
       
       {/* Redesigned Home/About Flow */}
-      <AboutPreview />
+      <SystemInterface />
       <TeamPreview members={previewMembers} />
       <EventsPreview events={previewEvents} />
       <GalleryPreview events={events} />
